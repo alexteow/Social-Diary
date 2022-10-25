@@ -1,30 +1,27 @@
 package SocialDiary;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        String select = "";
-        String noUserSelect = "";
+        String selection="";
         int userChoice = 0;
-
 
         do {
             try {
-                userChoice = PrintUserMenu.logInMenu(userChoice); // LogInMenu from StartMenuMethod class
+                userChoice = UserHandler.logInMenu(userChoice);
                 switch (userChoice) {
                     case 1:
-                        select = printUsersAndSelect();
-                        if (select.equals("Q")) {
+                        selection = printUsersAndSelect();
+                        if (selection.equalsIgnoreCase("Q")) {
                             break;
-                        } else if (select.equals("0")) {
+                        } else if (selection.equals("0")) {
                             System.out.println("Try again");
                             break;
                         } else {
-                            select = PrintUserMenu.userNames.get(Integer.valueOf(select) - 1);
+                            selection = UserHandler.userNames.get(Integer.valueOf(selection) - 1);
                         }
-                        PrintUserMenu.logInWithUserMenu(select);
+                        UserHandler.logInWithUserMenu(selection);
                         input.next();
                         break;
 
@@ -33,15 +30,17 @@ public class Main {
                          */
                         System.out.println("Please select a user name");
                         System.out.print("Press Q to main menu");
-                        String userNameInput = input.next(); // Create user
-                        if (userNameInput.equals("Q")) {
+                        String userNameInput = input.next();
+                        if (userNameInput.equalsIgnoreCase("Q")) {
+                            break;
+                        }
+                        else if (!userNameInput.equals("Q")){
+                            String userNameWithUpperCase = userNameInput.substring(0, 1).toUpperCase()
+                                    + userNameInput.substring(1);
+                            UserHandler.userNames.add(userNameWithUpperCase);
                             break;
                         }
 
-                        String userNameWithUpperCase = userNameInput.substring(0, 1).toUpperCase()
-                                + userNameInput.substring(1);
-                        PrintUserMenu.userNames.add(userNameWithUpperCase);
-                        break;
                     case 3:
                         System.out.println("Goodbye and welcome back");
                         break;
@@ -61,14 +60,21 @@ public class Main {
         } while (userChoice != 3);
 
     }
+
     private static String printUsersAndSelect() {
         Scanner input = new Scanner(System.in);
+        boolean checkUserNamesIsEmpty=UserHandler.userNames.isEmpty();
+        if(checkUserNamesIsEmpty==true){
+            System.out.println("No user available. You have to create a user first");
+            System.out.println("Press 2 to create a user in main menu\n");
+        }
         System.out.println("Please select a user or press Q to main menu");
-        for (int i = 0; i < PrintUserMenu.userNames.size(); i++) {
+        for (int i = 0; i < UserHandler.userNames.size(); i++) {
             System.out.print("\n");
-            System.out.println((1 + i) + "." + " " + PrintUserMenu.userNames.get(i));
+            System.out.println((1 + i) + "." + " " + UserHandler.userNames.get(i));
+
         }
         System.out.print("\n");
-        return input.next(); // User select a user from the list
+        return input.next();
     }
 }

@@ -1,13 +1,11 @@
 package SocialDiary;
 
 public class Diary {
-        private String name;
-        private String title;
-        private String date;
-        private String post;
+        static private String title;
+        static private String date;
+        static private String post;
 
-        public Diary(String name, String title, String date, String post){
-            this.name=name;
+        public Diary(String title, String date, String post){
             this.title=title;
             this.date=date;
             this.post=post;
@@ -15,12 +13,7 @@ public class Diary {
         public Diary(){
 
         }
-        public String getName(){
-            return name;
-        }
-        public void setName(String name){
-            this.name=name;
-        }
+
         public String getTitle(){
             return title;
         }
