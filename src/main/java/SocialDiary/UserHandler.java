@@ -29,15 +29,16 @@ public class UserHandler {
      * @param userChoice the user is choosing in the main menu
      */
 
-    public static int logInMenu(int userChoice) {
-        System.out.println("Welcome to the social diary!");
+    public static String logInMenu(String userChoice) {
+        System.out.println("Welcome to the Social diary!");
         System.out.println("You are logged in as: No user.\n");
         System.out.println("How do you want to log in?");
         System.out.println("[1] Select a social diary user");
         System.out.println("[2] Create a social diary user");
-        System.out.println("[3] Quit\n");
-        return input.nextInt();
+        System.out.println("[3] Quit");
+        return input.next();
     }
+
     /**
      * logInWithUserMenu
      * After the user have create and select a user then the user can read or create a diary.
@@ -48,7 +49,7 @@ public class UserHandler {
     public static void logInWithUserMenu(User user) throws IOException {
 
         Path userDiaryPath = Paths.get(diaryBasePath + "/" + user.getUsername() + ".json");
-        int logInWithUserMenuUserChoice = 0;
+        String logInWithUserMenuUserChoice = "";
 
         do {
 
@@ -57,46 +58,47 @@ public class UserHandler {
             System.out.println("[2] Write new social diary post");
             System.out.println("[3] Log in as another user");
             System.out.println("[4] Quit social diary");
-            logInWithUserMenuUserChoice = input.nextInt();
-            input.nextLine(); // So we can use input.nextLine to take and store whole sentence from user
+            logInWithUserMenuUserChoice = input.next();
+            input.nextLine();
 
 
             switch (logInWithUserMenuUserChoice) {
 
-                case 1:
+                case "1":
 
                     System.out.println("Here are all diaries you have written ");
                     System.out.println("By user: " + user.getUsername());
-                    readDiary(userDiaryPath); // Printing out all the diary the user have written with readDiary method.
+                    readDiary(userDiaryPath);
                     System.out.println("Press Q to go back to the user menu again");
                     String choices = input.next();
                     if (choices.equalsIgnoreCase("Q")) {
                         break;
                     }
                     break;
-                case 2:
+                case "2":
                     System.out.println("Now you are going to write your post to your diary");
                     writeDiary(userDiaryPath, user);
                     break;
 
-                case 3:
-                    logInWithUserMenuUserChoice = 4; // Go out from while loop and back to main menu
+                case "3":
+                    logInWithUserMenuUserChoice = "4";
                     break;
 
-                case 4:
+                case "4":
                     System.out.println("Goodbye and welcome back");
                     System.exit(0);
 
                 default:
-                    System.out.println("Please choose between 1-3");
+                    System.out.println("Please choose between 1-4");
                     System.out.print("\n");
                     break;
 
             }
 
-        } while (logInWithUserMenuUserChoice != 4); // The while loop will continue if the user have not select 4
+        } while (logInWithUserMenuUserChoice != "4");
 
     }
+
     /**
      * writeDiary
      * This method let the user write a diary. User can decide title and write a post.

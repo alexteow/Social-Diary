@@ -18,16 +18,16 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         String selection = "";
-        int userChoice = 0;
+        String userChoice ="";
         User user;
 
         do {
             try {
-                userChoice = UserHandler.logInMenu(userChoice);
+                userChoice = String.valueOf(UserHandler.logInMenu(userChoice));
                 switch (userChoice) {
-                    case 1:
+                    case "1":
                         selection = printUsersAndSelect();
-                        if (selection.equalsIgnoreCase("Q")) {// If user select Q going back to main menu
+                        if (selection.equalsIgnoreCase("Q")) {
                             break;
                         } else if (selection.equals("0")) {
                             System.out.println("Try again");
@@ -35,10 +35,10 @@ public class Main {
                         } else {
                             user = users.get(Integer.valueOf(selection) - 1);
                         }
-                        UserHandler.logInWithUserMenu(user); // Go to user menu with the user have selected
+                        UserHandler.logInWithUserMenu(user);
                         break;
 
-                    case 2:
+                    case "2":
 
                         System.out.println("Please select a user name");
                         System.out.print("Press Q to main menu\n");
@@ -55,8 +55,9 @@ public class Main {
                             break;
                         }
 
-                    case 3:
+                    case "3":
                         System.out.println("Goodbye and welcome back");
+                        System.exit(0);
                         break;
 
                     default:
@@ -67,11 +68,9 @@ public class Main {
             } catch (Exception e) {
                 System.out.println("You entered an invalid number, please try again");
                 continue;
-
             }
 
-        } while (userChoice != 3);  // The while loop will continue if the user have not select 3
-
+        } while (userChoice != "3");
 
     }
     /**
